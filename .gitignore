@@ -160,4 +160,17 @@ dist
 .history
 .ionide
 
+#React Native
+node_modules/
+.expo/
+dist/
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+
 # End of https://www.toptal.com/developers/gitignore/api/node,visualstudiocode
