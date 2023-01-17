@@ -18,7 +18,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Open up App.tsx to start working on your app!</Text>
-      <StatusBar barStyle={'dark-content'} backgroundColor="transparent" translucent/>
+      <StatusBar barStyle={'light-content'} backgroundColor="transparent" translucent/>
     </View>
   );
 }
@@ -26,7 +26,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#3333',
+    backgroundColor: '#09090A',
     alignItems: 'center',
     justifyContent: 'center',
   },
