@@ -1,6 +1,6 @@
 import { generateDatesFromYear } from "../utils/generate-dates-from-year"
 import HabitDaysPlaceHolder from "./HabitDayPlaceholder"
-import HabitDays from "./HabitDays"
+import HabitDays from "./HabitDay"
 
 const weekDays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
 
@@ -30,7 +30,7 @@ export function SummaryTable() {
             <div className="grid grid-rows-7 grid-flow-col gap-3">
                 {
                     summaryDates.map(date => {
-                        return <HabitDays key={date.toString()}/>
+                        return <HabitDays key={date.toString()} completed={Math.round(Math.random()*5)} amount={5} />
                     })
                 }
                 {
