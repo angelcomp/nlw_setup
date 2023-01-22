@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import logoImage from '../assets/logo.svg'
 import { NewHabitDialog } from './NewHabitDialog'
 
