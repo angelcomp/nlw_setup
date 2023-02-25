@@ -1,21 +1,42 @@
 import { useState } from 'react'
-import { View, ScrollView, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, ScrollView, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import { BackButton } from "../components/BackButton";
 import { CheckBox } from "../components/CheckBox";
 import { Feather } from "@expo/vector-icons"
 import colors from "tailwindcss/colors";
+import { api } from '../lib/axios';
 
 const WEEK_DAYS = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"]
 
 export function CreateHabit() {
 
-    const [weekDays, toggleWeekDay] = useState<number[]>([])
+    const [title, setTitle] = useState('')
+
+    const [weekDays, setWeekDays] = useState<number[]>([])
 
     function handleToggleWeekDay(weekDayIndex: number) {
         if (weekDays.includes(weekDayIndex)) {
-            toggleWeekDay(prevState => prevState.filter(weekDay => weekDay !== weekDayIndex))
+            setWeekDays(prevState => prevState.filter(weekDay => weekDay !== weekDayIndex))
         } else {
-            toggleWeekDay(prevState => [...prevState, weekDayIndex])
+            setWeekDays(prevState => [...prevState, weekDayIndex])
+        }
+    }
+
+    async function handleCreateNewHabit() {
+        try {
+            if(!title.trim() || weekDays.length === 0) {
+                Alert.alert('Novo Hábito', 'Informe o título para o hábito criado e escolha a periodicidade')
+            }
+
+            await api.post('/habits', { title, weekDays })
+
+            setTitle('')
+            setWeekDays([])
+            Alert.alert('Novo Hábito', 'Hábito criado com sucesso')
+
+        } catch (error) {
+            console.log(error)
+            Alert.alert('Ops', 'Não foi possível criar o novo hábito')
         }
     }
 
@@ -36,6 +57,8 @@ export function CreateHabit() {
                     placeholder="Exercícios, dormir bem, etc..."
                     placeholderTextColor={colors.zinc[400]}
                     className="h-12 pl-4 rounded-lg mt-3 bg-zinc-900 text-white border-2 border-zinc-800 focus:border-green-600"
+                    onChangeText={setTitle}
+                    value={title}
                 />
 
                 <Text className="text-white font-semibold mt-4 mb-3 text-base">
@@ -53,7 +76,10 @@ export function CreateHabit() {
                     ))
                 }
 
-                <TouchableOpacity className='w-full h-14 flex-row bg-green-600 mt-6 p-3 rounded-md justify-center items-center'>
+                <TouchableOpacity 
+                    className='w-full h-14 flex-row bg-green-600 mt-6 p-3 rounded-md justify-center items-center'
+                    onPress={handleCreateNewHabit}
+                >
                     <Feather 
                         name="check"
                         size={20}
