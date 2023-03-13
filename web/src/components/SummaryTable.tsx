@@ -1,6 +1,6 @@
 import { generateDatesFromYear } from "../utils/generate-dates-from-year"
 import HabitDaysPlaceHolder from "./HabitDayPlaceholder"
-import HabitDays from "./HabitDay"
+import HabitDay from "./HabitDay"
 import { useEffect, useState } from "react"
 import { api } from "../lib/axios"
 import dayjs from "dayjs"
@@ -48,16 +48,17 @@ export function SummaryTable() {
 
             <div className="grid grid-rows-7 grid-flow-col gap-3">
                 {
+                    summary.length > 0 &&
                     summaryDates.map(date => {
 
                         const dayInSummary = summary.find(day => {
                             return dayjs(date).isSame(day.date, 'day')
                         })
 
-                        return <HabitDays
+                        return <HabitDay
                             key={date.toString()} 
                             date={date}
-                            completed={dayInSummary?.completed} 
+                            defaultCompleted={dayInSummary?.completed} 
                             amount={dayInSummary?.amount} 
                         />
                     })
